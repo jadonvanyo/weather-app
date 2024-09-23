@@ -2,6 +2,7 @@ import React from 'react'
 import { IoSunnySharp } from "react-icons/io5";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { IoLocationSharp } from 'react-icons/io5';
+import SearchBox from './SearchBox';
 
 type Props = {}
 
@@ -14,11 +15,12 @@ export default function Navbar({}: Props) {
                 <IoSunnySharp className='text-3xl mt-1 text-yellow-300' />
             </div>
             <section className='flex gap-4 items-center'>
-                <FaLocationCrosshairs className='text-2xl mt-1 text-gray-400 hover:opacity-80 cursor-pointer' />
+                <FaLocationCrosshairs className='text-2xl text-gray-400 hover:opacity-80 cursor-pointer' />
                 <IoLocationSharp className='text-3xl'/>
                 <p className='text-slate-900/80 text-sm'>United States</p>
                 <div>
                     {/* Search Box */}
+                    <SearchBox />
                 </div>
             </section>
         </div>
