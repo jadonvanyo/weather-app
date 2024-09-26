@@ -8,6 +8,7 @@ import { format, parse, parseISO } from "date-fns";
 import Container from "@/components/Container";
 import { convertKelvinToFahrenheit } from "@/utils/convertKelvinToFahrenheit";
 import WeatherIcon from "@/components/WeatherIcon";
+import { getDayOrNightIcon } from "@/utils/getDayOrNightIcons";
 
 type WeatherData = {
   cod: string;
@@ -125,8 +126,12 @@ export default function Home() {
                     key={i}
                     className="flex flex-col justify-between gap-2 items-center text-xs font-semibold"
                   >
+                    {/* TODO: Limit this to just next 24 hours */}
                     <p className="whitespace-nowrap">{format(parseISO(d.dt_txt), "h:mm a")}</p>
-                    <WeatherIcon iconName={d.weather[0].icon}/>
+                    {/* <WeatherIcon iconName={d.weather[0].icon}/> */}
+                    <WeatherIcon 
+                      iconName={getDayOrNightIcon(d.weather[0].icon, d.dt_txt)}
+                    /> 
                     <p>{convertKelvinToFahrenheit(d?.main.temp ?? 0)}°</p>
                   </div>
                 ))}
