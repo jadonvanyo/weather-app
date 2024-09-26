@@ -7,6 +7,7 @@ import axios from "axios";
 import { format, parse, parseISO } from "date-fns";
 import Container from "@/components/Container";
 import { convertKelvinToFahrenheit } from "@/utils/convertKelvinToFahrenheit";
+import WeatherIcon from "@/components/WeatherIcon";
 
 type WeatherData = {
   cod: string;
@@ -125,6 +126,7 @@ export default function Home() {
                     className="flex flex-col justify-between gap-2 items-center text-xs font-semibold"
                   >
                     <p className="whitespace-nowrap">{format(parseISO(d.dt_txt), "h:mm a")}</p>
+                    <WeatherIcon iconName={d.weather[0].icon}/>
                     <p>{convertKelvinToFahrenheit(d?.main.temp ?? 0)}°</p>
                   </div>
                 ))}
