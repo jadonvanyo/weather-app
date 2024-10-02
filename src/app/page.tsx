@@ -4,11 +4,14 @@ import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { format, parse, parseISO } from "date-fns";
+import { format, fromUnixTime, parse, parseISO } from "date-fns";
 import Container from "@/components/Container";
 import { convertKelvinToFahrenheit } from "@/utils/convertKelvinToFahrenheit";
 import WeatherIcon from "@/components/WeatherIcon";
 import { getDayOrNightIcon } from "@/utils/getDayOrNightIcons";
+import WeatherDetails from "@/components/WeatherDetails";
+import { metersToKilometers } from "@/utils/metersToKilometers";
+import { convertWindSpeed } from "@/utils/convertWindSpeed";
 
 type WeatherData = {
   cod: string;
@@ -138,11 +141,34 @@ export default function Home() {
               </div>
             </Container>
           </div>
+          <div className="flex gap-4">
+            {/* left */}
+            <Container className="w-fit justify-center flex-col px-4 items-center">
+              <p className="capitalize text-center">{firstData?.weather[0].description}</p>
+              <WeatherIcon
+                iconName={getDayOrNightIcon(
+                  firstData?.weather[0].icon ?? "", 
+                  firstData?.dt_txt ?? ""
+                )}
+              />
+            </Container>
+            <Container className="bg-blue-200 px-6 gap-4 justify-between overflow-x-auto">
+              <WeatherDetails 
+                visibility={metersToKilometers(firstData?.visibility ?? 10000)}
+                airPressure={`${firstData?.main.pressure} hPa`}
+                humidity={`${firstData?.main.humidity}%`}
+                windSpeed={convertWindSpeed(firstData?.wind.speed ?? 0)}
+                sunrise={format(fromUnixTime(data?.city.sunrise ?? 1702949452), 'H:mm')}
+                sunset={format(fromUnixTime(data?.city.sunset ?? 1702517657), 'H:mm')}
+              />
+            </Container>
+            {/* right */}
+          </div>
         </section>
 
         {/* 7 day forecast */}
         <section className="flex w-full flex-col gap-4">
-            <p className="text-2xl"> Forcast (7 days)</p>
+            <p className="text-2xl"> Forecast (7 days)</p>
         </section>
       </main>
     </div>
