@@ -1,7 +1,7 @@
 import React from 'react'
 import Container from './Container'
 import WeatherIcon from './WeatherIcon'
-import {WeatherDetailProps} from './WeatherDetails';
+import WeatherDetails, {WeatherDetailProps} from './WeatherDetails';
 import { convertKelvinToFahrenheit } from '@/utils/convertKelvinToFahrenheit';
 
 export interface ForecastWeatherDetailProps extends WeatherDetailProps{
@@ -40,12 +40,16 @@ export default function ForecastWeatherDetails(
         </div>
         <div>
           <span className='text-5xl'>{convertKelvinToFahrenheit(temp ?? 0)}°</span>
-          <p>
+          <p className='text-sm space-x-1 whitespace-nowrap'>
             <span>Feels Like</span>
             <span>{convertKelvinToFahrenheit(feels_like ?? 0)}</span>
           </p>
           <p className='capitalize'>{description}</p>
         </div>
+      </section>
+      {/* Right Section */}
+      <section className='overflow-x-auto flex justify-between gap-4 px-4 w-full pr-10'>
+        <WeatherDetails {...props}/>
       </section>
     </Container>
   )
